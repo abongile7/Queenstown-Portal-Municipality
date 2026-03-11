@@ -1,10 +1,27 @@
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const db = require('../models/db');
 
+const scryptAsync = promisify(crypto.scrypt);
+
+async function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const derived = await scryptAsync(password, salt, 64);
+  return `${salt}:${Buffer.from(derived).toString('hex')}`;
+}
+
+async function verifyPassword(password, stored) {
+  const [salt, hashHex] = (stored || '').split(':');
+  if (!salt || !hashHex) return false;
+  const derived = await scryptAsync(password, salt, 64);
+  const hashBuffer = Buffer.from(hashHex, 'hex');
+  return hashBuffer.length === derived.length && crypto.timingSafeEqual(hashBuffer, derived);
+}
+
 async function register(req, res) {
   const { name, email, password, role = 'candidate' } = req.body;
-  const passwordHash = await bcrypt.hash(password, 10);
+  const passwordHash = await hashPassword(password);
   const created = await db.query(
     'INSERT INTO users(name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
     [name, email, passwordHash, role]
@@ -22,7 +39,7 @@ async function login(req, res) {
   const user = await db.query('SELECT * FROM users WHERE email = $1', [email]);
   if (!user.rows[0]) return res.status(401).json({ message: 'Invalid credentials' });
 
-  const valid = await bcrypt.compare(password, user.rows[0].password_hash);
+  const valid = await verifyPassword(password, user.rows[0].password_hash);
   if (!valid) return res.status(401).json({ message: 'Invalid credentials' });
 
   const candidate = await db.query('SELECT id FROM candidates WHERE user_id = $1', [user.rows[0].id]);

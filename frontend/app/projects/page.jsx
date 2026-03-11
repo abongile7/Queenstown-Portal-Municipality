@@ -1,24 +1,22 @@
-import Image from 'next/image';
-
 const projects = [
-  ['Municipal building upgrades', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab'],
-  ['Council meetings and governance', 'https://images.unsplash.com/photo-1517048676732-d65bc937f952'],
-  ['Water infrastructure', 'https://images.unsplash.com/photo-1509395176047-4a66953fd231'],
-  ['Road infrastructure', 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000'],
-  ['Community outreach', 'https://images.unsplash.com/photo-1469571486292-b53601020f90']
+  ['Water infrastructure upgrades', 'Komani', 'R120m', '68%', '2026-11-30'],
+  ['Road rehabilitation', 'Mlungisi', 'R85m', '54%', '2026-09-15'],
+  ['Housing developments', 'Ezibeleni', 'R200m', '31%', '2027-06-30'],
+  ['Community centres', 'Tarkastad', 'R42m', '72%', '2026-08-20']
 ];
 
 export default function ProjectsPage() {
   return (
-    <div className="space-y-5">
-      <h2 className="text-2xl font-bold text-municipalBlue">Community Projects</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {projects.map(([title, image]) => (
-          <article key={title} className="card">
-            <div className="relative h-40 rounded overflow-hidden mb-2">
-              <Image src={image} alt={title} fill className="object-cover" />
-            </div>
-            <h3 className="font-semibold text-municipalBlue">{title}</h3>
+    <div className="space-y-3">
+      <h2 className="text-2xl font-bold text-municipalBlue">Municipal Project Tracker</h2>
+      <div className="grid md:grid-cols-2 gap-3">
+        {projects.map(([name, location, budget, progress, date]) => (
+          <article key={name} className="card">
+            <h3 className="font-semibold">{name}</h3>
+            <p className="text-sm">Location: {location}</p>
+            <p className="text-sm">Budget: {budget}</p>
+            <p className="text-sm">Completion: {progress}</p>
+            <p className="text-sm">Expected completion: {date}</p>
           </article>
         ))}
       </div>

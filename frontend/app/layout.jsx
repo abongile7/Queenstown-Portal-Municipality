@@ -1,45 +1,27 @@
 import './globals.css';
-import Link from 'next/link';
+import NavBar from '../components/NavBar';
+import ChatbotWidget from '../components/ChatbotWidget';
 
 export const metadata = {
-  title: 'Chris Hani District Municipality Portal',
-  description: 'Serving Communities Through Sustainable Development'
+  title: 'Enoch Mgijima Local Municipality',
+  description: 'Modern digital municipal platform for Komani (Queenstown), Eastern Cape'
 };
-
-const navItems = [
-  ['/', 'Home'],
-  ['/about', 'About'],
-  ['/services', 'Services'],
-  ['/departments', 'Departments'],
-  ['/youth-opportunities', 'Youth Opportunities'],
-  ['/epwp', 'EPWP'],
-  ['/careers', 'Careers'],
-  ['/gallery', 'Gallery'],
-  ['/contact', 'Contact']
-];
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header className="bg-municipalBlue text-white border-b-4 border-municipalGold">
-          <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="flex flex-wrap justify-between items-center gap-3">
-              <div>
-                <h1 className="font-bold text-xl">Chris Hani District Municipality</h1>
-                <p className="text-xs text-slate-200">Eastern Cape, South Africa · Serving Communities Through Sustainable Development</p>
-              </div>
-              <nav className="flex flex-wrap gap-3 text-sm font-medium">
-                {navItems.map(([href, label]) => (
-                  <Link key={href} href={href} className="hover:text-municipalGold transition-colors">
-                    {label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </div>
-        </header>
+        <NavBar />
         <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
+        <footer className="bg-municipalBlue text-white mt-10">
+          <div className="max-w-7xl mx-auto px-4 py-8 grid md:grid-cols-4 gap-4 text-sm">
+            <div><h4 className="font-semibold">Municipal Offices</h4><p>15 Bells Road, Komani</p></div>
+            <div><h4 className="font-semibold">Emergency Numbers</h4><p>Fire/Ambulance: 10177</p></div>
+            <div><h4 className="font-semibold">Service Contacts</h4><p>045 808 4600</p></div>
+            <div><h4 className="font-semibold">Quick Links</h4><p>Careers · Tenders · Notices</p></div>
+          </div>
+        </footer>
+        <ChatbotWidget />
       </body>
     </html>
   );

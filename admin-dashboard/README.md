@@ -1,17 +1,11 @@
-# Municipal Admin Dashboard
+# Admin Dashboard Notes
 
-Admin panel capabilities for Chris Hani District Municipality:
+Backend APIs remain unchanged.
 
-- Create, edit, close vacancies (`POST/PUT/PATCH /api/jobs`)
-- Create youth programmes (`POST /api/programs`)
-- Manage EPWP worker registration, assignment, and stipend tracking (`/api/epwp/*`)
-- Manage resident skills database search (`GET /api/residents/skills-database`)
-- View applicants and approve applications (`GET /api/admin/applications`, `PATCH /api/applications/:id/status`)
-- View analytics for charts:
-  - applications per ward (bar chart)
-  - youth applicants by ward (line chart)
-  - hiring pipeline (pie chart)
-  - jobs posted vs jobs filled
-  - skills shortages
-  - programme participation
-- Export reports via API data extracts.
+Frontend now includes additional municipal operations views that consume/visualize municipal data:
+- `/dashboard` Service Delivery Dashboard
+- `/issue-map` Smart Municipality Issue Map
+- `/smart-city` Digital Twin control-center style dashboard
+- `/map` and `/outages` geographic service visualization
+
+These views are designed for municipal operations and resident transparency.

@@ -1,8 +1,9 @@
-export default function SectionCard({ title, children }) {
+export default function SectionCard({ title, eyebrow, children, className = '', ...props }) {
   return (
-    <section className="card">
-      <h2 className="text-xl font-semibold mb-3 text-municipalBlue">{title}</h2>
-      <div className="text-sm text-slate-700 space-y-2">{children}</div>
+    <section className={`panel ${className}`.trim()} {...props}>
+      {eyebrow ? <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-municipalGold">{eyebrow}</p> : null}
+      <h2 className="text-2xl font-semibold text-slate-950">{title}</h2>
+      <div className="mt-4 space-y-3 text-sm leading-7 text-slate-700 sm:text-[15px]">{children}</div>
     </section>
   );
 }
